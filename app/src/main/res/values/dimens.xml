@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="chars_size">16sp</dimen>
+    <dimen name="keys_margin">6dp</dimen>
+    <dimen name="digit_size_on_scoreboard">40sp</dimen>
+</resources>
