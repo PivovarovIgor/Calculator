@@ -8,5 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="digits_color">#000000</color>
-    <color name="background_color">#DDDDDD</color>
+    <color name="background_color">#CCCCCC</color>
 </resources>

@@ -20,4 +20,5 @@
     <string name="percent">%</string>
     <string name="backspace"><![CDATA[<-]]></string>
     <string name="equal">=</string>
+    <string name="background_image">Background image</string>
 </resources>
