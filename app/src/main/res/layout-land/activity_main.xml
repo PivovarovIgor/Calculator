@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    android:paddingStart="@dimen/layout_padding"
+    android:paddingEnd="@dimen/layout_padding"
+    android:paddingBottom="@dimen/layout_bottom_padding">
 
     <ImageView
         android:layout_width="match_parent"
@@ -33,6 +36,7 @@
             android:textColor="@color/digits_color"
             android:textSize="@dimen/digit_size_on_scoreboard"
             android:textStyle="bold"
+            android:lines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +46,10 @@
             android:id="@+id/key_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            android:layout_marginEnd="@dimen/keys_margin"
+            android:layout_marginTop="@dimen/keys_margin"
+            android:layout_marginStart="@dimen/keys_margin_double"
+            android:layout_marginBottom="@dimen/keys_margin"
             android:text="@string/с"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
@@ -56,10 +63,10 @@
             android:id="@+id/key_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
-            android:layout_marginStart="@dimen/keys_margin"
             android:layout_marginEnd="@dimen/keys_margin"
-            android:layout_marginBottom="@dimen/keys_margin_bottom"
+            android:layout_marginTop="@dimen/keys_margin"
+            android:layout_marginStart="@dimen/keys_margin_double"
+            android:layout_marginBottom="@dimen/keys_margin"
             android:text="@string/percent"
             android:textSize="@dimen/chars_size"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +78,10 @@
             android:id="@+id/key_backspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            android:layout_marginEnd="@dimen/keys_margin"
+            android:layout_marginTop="@dimen/keys_margin"
+            android:layout_marginStart="@dimen/keys_margin_double"
+            android:layout_marginBottom="@dimen/keys_margin"
             android:text="@string/backspace"
             android:textSize="@dimen/chars_size"
             app:layout_constraintBottom_toTopOf="@+id/key_percent"
@@ -87,11 +97,10 @@
             android:text="@string/key_1"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/key_4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/key_2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scoreboard"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toBottomOf="@id/key_4" />
 
         <Button
             android:id="@+id/key_2"
@@ -101,10 +110,10 @@
             android:text="@string/key_2"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/key_5"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/key_3"
             app:layout_constraintStart_toEndOf="@id/key_1"
-            app:layout_constraintTop_toBottomOf="@id/scoreboard"
+            app:layout_constraintTop_toBottomOf="@id/key_5"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
@@ -115,17 +124,19 @@
             android:text="@string/key_3"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/key_6"
-            app:layout_constraintEnd_toStartOf="@id/key_minus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/key_0"
             app:layout_constraintStart_toEndOf="@id/key_2"
-            app:layout_constraintTop_toBottomOf="@id/scoreboard"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toBottomOf="@id/key_6" />
 
         <Button
             android:id="@+id/key_div"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            android:layout_marginStart="@dimen/keys_margin"
+            android:layout_marginTop="@dimen/keys_margin"
+            android:layout_marginEnd="@dimen/keys_margin_double"
+            android:layout_marginBottom="@dimen/keys_margin"
             android:text="@string/key_div"
             android:textSize="@dimen/chars_size"
             app:layout_constraintBottom_toTopOf="@+id/key_mul"
@@ -142,10 +153,10 @@
             android:text="@string/key_4"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/key_7"
+            app:layout_constraintBottom_toTopOf="@id/key_1"
             app:layout_constraintEnd_toStartOf="@id/key_5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/key_1" />
+            app:layout_constraintTop_toBottomOf="@+id/key_7" />
 
         <Button
             android:id="@+id/key_5"
@@ -155,10 +166,10 @@
             android:text="@string/key_5"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/key_8"
+            app:layout_constraintBottom_toTopOf="@+id/key_2"
             app:layout_constraintEnd_toStartOf="@id/key_6"
             app:layout_constraintStart_toEndOf="@id/key_4"
-            app:layout_constraintTop_toBottomOf="@id/key_2" />
+            app:layout_constraintTop_toBottomOf="@id/key_8" />
 
         <Button
             android:id="@+id/key_6"
@@ -168,16 +179,19 @@
             android:text="@string/key_6"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/key_9"
+            app:layout_constraintBottom_toTopOf="@+id/key_3"
             app:layout_constraintEnd_toStartOf="@id/key_plus"
             app:layout_constraintStart_toEndOf="@id/key_5"
-            app:layout_constraintTop_toBottomOf="@id/key_3" />
+            app:layout_constraintTop_toBottomOf="@id/key_9" />
 
         <Button
             android:id="@+id/key_mul"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            android:layout_marginStart="@dimen/keys_margin"
+            android:layout_marginTop="@dimen/keys_margin"
+            android:layout_marginEnd="@dimen/keys_margin_double"
+            android:layout_marginBottom="@dimen/keys_margin"
             android:text="@string/key_mul"
             android:textSize="@dimen/chars_size"
             app:layout_constraintBottom_toTopOf="@+id/key_dot"
@@ -189,58 +203,53 @@
             android:id="@+id/key_7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
-            android:layout_marginStart="@dimen/keys_margin"
-            android:layout_marginEnd="@dimen/keys_margin"
-            android:layout_marginBottom="@dimen/keys_margin_bottom"
+            android:layout_margin="@dimen/keys_margin"
             android:text="@string/key_7"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintBottom_toTopOf="@+id/key_4"
             app:layout_constraintEnd_toStartOf="@id/key_8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/key_4" />
+            app:layout_constraintTop_toBottomOf="@id/scoreboard"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
             android:id="@+id/key_8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
-            android:layout_marginStart="@dimen/keys_margin"
-            android:layout_marginEnd="@dimen/keys_margin"
-            android:layout_marginBottom="@dimen/keys_margin_bottom"
+            android:layout_margin="@dimen/keys_margin"
             android:text="@string/key_8"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintBottom_toTopOf="@+id/key_5"
             app:layout_constraintEnd_toStartOf="@id/key_9"
             app:layout_constraintStart_toEndOf="@id/key_7"
-            app:layout_constraintTop_toBottomOf="@id/key_5" />
+            app:layout_constraintTop_toBottomOf="@id/scoreboard"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
             android:id="@+id/key_9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
-            android:layout_marginStart="@dimen/keys_margin"
-            android:layout_marginEnd="@dimen/keys_margin"
-            android:layout_marginBottom="@dimen/keys_margin_bottom"
+            android:layout_margin="@dimen/keys_margin"
             android:text="@string/key_9"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/key_0"
+
+
+            app:layout_constraintBottom_toTopOf="@+id/key_6"
+            app:layout_constraintEnd_toStartOf="@id/key_minus"
             app:layout_constraintStart_toEndOf="@id/key_8"
-            app:layout_constraintTop_toBottomOf="@id/key_6" />
+            app:layout_constraintTop_toBottomOf="@id/scoreboard"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
             android:id="@+id/key_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
-            android:layout_marginStart="@dimen/keys_margin"
-            android:layout_marginEnd="@dimen/keys_margin"
-            android:layout_marginBottom="@dimen/keys_margin_bottom"
+            android:layout_margin="@dimen/keys_margin"
             android:text="@string/key_0"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
@@ -253,10 +262,10 @@
             android:id="@+id/key_dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
             android:layout_marginStart="@dimen/keys_margin"
-            android:layout_marginEnd="@dimen/keys_margin"
-            android:layout_marginBottom="@dimen/keys_margin_bottom"
+            android:layout_marginTop="@dimen/keys_margin"
+            android:layout_marginEnd="@dimen/keys_margin_double"
+            android:layout_marginBottom="@dimen/keys_margin"
             android:text="@string/key_dot"
             android:textSize="@dimen/chars_size"
             android:textStyle="bold"
