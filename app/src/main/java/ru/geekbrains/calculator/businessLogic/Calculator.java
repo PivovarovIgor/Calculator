@@ -1,4 +1,4 @@
-package ru.geekbrains.calculator;
+package ru.geekbrains.calculator.businessLogic;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,10 +6,11 @@ import android.os.Parcelable;
 public class Calculator implements Parcelable {
 
     private StringBuilder textScore;
-    private double[] args;
+    private final double[] args;
     private int pointer;
     private Operations currentOperation;
     private boolean isEnteringNewArgument;
+    private OnUpdateScoreListener onUpdateScoreListener;
 
     public Calculator() {
         this.textScore = new StringBuilder("0");
@@ -54,6 +55,11 @@ public class Calculator implements Parcelable {
         return this.textScore.toString();
     }
 
+    public void setOnUpdateScoreListener(OnUpdateScoreListener listener) {
+        this.onUpdateScoreListener = listener;
+        updateScore();
+    }
+
     public void put(char ch) {
         if (!isEnteringNewArgument) {
             textScore = new StringBuilder("0");
@@ -68,6 +74,7 @@ public class Calculator implements Parcelable {
                 && this.textScore.charAt(1) != '.') {
             this.textScore.deleteCharAt(0);
         }
+        updateScore();
     }
 
     public void clear() {
@@ -76,6 +83,7 @@ public class Calculator implements Parcelable {
         pointer = 0;
         currentOperation = null;
         this.textScore = new StringBuilder("0");
+        updateScore();
     }
 
     public void del() {
@@ -89,6 +97,7 @@ public class Calculator implements Parcelable {
                 || (textScore.length() == 1 && textScore.charAt(0) == '-')) {
             textScore = new StringBuilder("0");
         }
+        updateScore();
     }
 
     public void plus() {
@@ -126,8 +135,21 @@ public class Calculator implements Parcelable {
         }
     }
 
+    public interface OnUpdateScoreListener {
+
+        void onUpdateScore(String textScore);
+    }
+
+    private void updateScore() {
+        if (onUpdateScoreListener == null) {
+            return;
+        }
+        onUpdateScoreListener.onUpdateScore(getTextScore());
+    }
+
     private void setScoreNumber(double number) {
         textScore = new StringBuilder(Double.toString(number));
+        updateScore();
     }
 
     private double getScoreNumber() {
