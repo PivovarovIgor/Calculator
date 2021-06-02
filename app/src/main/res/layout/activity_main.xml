@@ -7,7 +7,7 @@
     android:background="@color/background_color"
     android:padding="@dimen/layout_padding">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.1"
@@ -20,254 +20,196 @@
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/scoreboard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
-            android:gravity="center_vertical|end"
-            android:padding="6dp"
-            android:shadowColor="#AAAAAA"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            android:shadowRadius="1.5"
-            android:textColor="@color/digits_color"
-            android:textSize="@dimen/digit_size_on_scoreboard"
-            android:textStyle="bold"
-            android:lines="2"
+            style="@style/Scoreboard"
             app:layout_constraintEnd_toEndOf="@id/key_div"
             app:layout_constraintStart_toStartOf="@id/key_c"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1234567890" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_c"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong.Red"
             android:text="@string/с"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_percent"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scoreboard" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_percent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons"
             android:text="@string/percent"
-            android:textSize="@dimen/chars_size"
             app:layout_constraintEnd_toStartOf="@+id/key_backspace"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/key_c"
             app:layout_constraintTop_toBottomOf="@id/scoreboard" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_backspace"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons"
             android:text="@string/backspace"
-            android:textSize="@dimen/chars_size"
             app:layout_constraintEnd_toStartOf="@+id/key_div"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/key_percent"
             app:layout_constraintTop_toBottomOf="@id/scoreboard" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_1"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_2"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/key_4" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_2"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_3"
             app:layout_constraintStart_toEndOf="@+id/key_1"
             app:layout_constraintTop_toBottomOf="@id/key_5" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_3"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/key_plus"
             app:layout_constraintStart_toEndOf="@id/key_2"
             app:layout_constraintTop_toBottomOf="@id/key_6" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_div"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons"
             android:text="@string/key_div"
-            android:textSize="@dimen/chars_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/key_backspace"
             app:layout_constraintTop_toBottomOf="@id/scoreboard" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_4"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/key_7" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_5"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_6"
             app:layout_constraintStart_toEndOf="@id/key_4"
             app:layout_constraintTop_toBottomOf="@id/key_8" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_6"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/key_minus"
             app:layout_constraintStart_toEndOf="@id/key_5"
             app:layout_constraintTop_toBottomOf="@id/key_9" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_mul"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons"
             android:text="@string/key_mul"
-            android:textSize="@dimen/chars_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/key_9"
             app:layout_constraintTop_toBottomOf="@id/key_div" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_7"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_8"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/key_c" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_8"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_8"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_9"
             app:layout_constraintStart_toEndOf="@id/key_7"
             app:layout_constraintTop_toBottomOf="@id/key_percent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_9"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
             android:text="@string/key_9"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/key_mul"
             app:layout_constraintStart_toEndOf="@id/key_8"
             app:layout_constraintTop_toBottomOf="@id/key_backspace" />
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
             android:text="@string/key_0"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/key_2"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/key_1"
             app:layout_constraintTop_toBottomOf="@id/key_1" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_dot"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
+            style="@style/Buttons.Strong"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
             android:text="@string/key_dot"
-            android:textSize="@dimen/chars_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/key_3"
             app:layout_constraintStart_toStartOf="@id/key_3"
             app:layout_constraintTop_toBottomOf="@id/key_3" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_minus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons"
             android:text="@string/key_minus"
-            android:textSize="@dimen/chars_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/key_6"
             app:layout_constraintTop_toBottomOf="@id/key_mul" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_plus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keys_margin"
+            style="@style/Buttons"
             android:text="@string/key_plus"
-            android:textSize="@dimen/chars_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/key_3"
             app:layout_constraintTop_toBottomOf="@id/key_minus" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/key_result"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keys_margin"
+            style="@style/Buttons"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
             android:text="@string/equal"
-            android:textSize="@dimen/chars_size"
             app:layout_constraintEnd_toEndOf="@id/key_plus"
             app:layout_constraintStart_toStartOf="@+id/key_plus"
             app:layout_constraintTop_toBottomOf="@+id/key_plus" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/set_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/set_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/keys_margin_double"
+            android:text="@string/set_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/set_light"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

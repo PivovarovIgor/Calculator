@@ -1,15 +1,17 @@
 package ru.geekbrains.calculator.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import ru.geekbrains.calculator.R;
 import ru.geekbrains.calculator.businessLogic.Calculator;
 
-public class MainActivity extends AppCompatActivity implements Calculator.OnUpdateScoreListener{
+public class MainActivity extends AppCompatActivity implements Calculator.OnUpdateScoreListener {
 
     private final String KEY_CALC = "calculator";
     private Calculator calculator;
@@ -29,6 +31,15 @@ public class MainActivity extends AppCompatActivity implements Calculator.OnUpda
 
         initOnClickListener();
         calculator.setOnUpdateScoreListener(this);
+
+        View buttonSetDark = findViewById(R.id.set_dark);
+        if (buttonSetDark != null) {
+            buttonSetDark.setOnClickListener(v -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES));
+        }
+        View buttonSetLight = findViewById(R.id.set_light);
+        if (buttonSetLight != null) {
+            buttonSetLight.setOnClickListener(v -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO));
+        }
     }
 
     @Override

@@ -5,5 +5,7 @@
     <dimen name="keys_margin_double">6dp</dimen>
     <dimen name="digit_size_on_scoreboard">40sp</dimen>
     <dimen name="layout_padding">12dp</dimen>
+    <dimen name="scoreboard_padding">6dp</dimen>
     <dimen name="layout_bottom_padding">6dp</dimen>
+    <dimen name="button_corner_radius">25dp</dimen>
 </resources>

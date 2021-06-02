@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="digits_color">#000000</color>
     <color name="background_color">#CCCCCC</color>
+    <color name="shadow_color">#AAAAAA</color>
+    <color name="button">#575757</color>
+    <color name="button_strong">#FF6200EE</color>
 </resources>

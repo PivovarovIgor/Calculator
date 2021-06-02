@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Buttons">
+        <item name="android:textSize">@dimen/chars_size</item>
+        <item name="android:layout_marginTop">@dimen/keys_margin</item>
+        <item name="android:layout_marginBottom">@dimen/keys_margin</item>
+        <item name="android:layout_marginStart">@dimen/keys_margin</item>
+        <item name="android:layout_marginEnd">@dimen/keys_margin</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="backgroundTint">@color/button</item>
+    </style>
+
+    <style name="Buttons.Strong">
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@color/button_strong</item>
+    </style>
+    <style name="Buttons.Strong.Red">
+        <item name="backgroundTint">@android:color/holo_red_dark</item>
+    </style>
+
+    <style name="Scoreboard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/keys_margin</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:padding">@dimen/scoreboard_padding</item>
+        <item name="android:shadowColor">@color/shadow_color</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">5</item>
+        <item name="android:shadowRadius">1.5</item>
+        <item name="android:textColor">@color/digits_color</item>
+        <item name="android:textSize">@dimen/digit_size_on_scoreboard</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lines">2</item>
+    </style>
+</resources>

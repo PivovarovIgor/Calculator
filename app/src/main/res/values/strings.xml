@@ -21,4 +21,7 @@
     <string name="backspace"><![CDATA[<-]]></string>
     <string name="equal">=</string>
     <string name="background_image">Background image</string>
+    <string name="dark_mode">dark mode</string>
+    <string name="set_dark">set dark</string>
+    <string name="set_light">set light</string>
 </resources>
