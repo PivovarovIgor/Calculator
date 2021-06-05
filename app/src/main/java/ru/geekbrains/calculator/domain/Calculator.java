@@ -8,6 +8,8 @@ import java.math.RoundingMode;
 
 public class Calculator implements Parcelable {
 
+    private static final int SCALE_FOR_DIV_OPERATOR = 10;
+
     private final BigDecimal[] args;
     private int pointer;
     private Operations currentOperation;
@@ -43,10 +45,37 @@ public class Calculator implements Parcelable {
     }
 
     public BigDecimal result(BigDecimal number) {
+        if (number == null) {
+            return null;
+        }
         args[pointer] = number;
         calculate();
         pointer = 0;
         return args[0];
+    }
+
+    public BigDecimal setPercent(BigDecimal number) {
+        if (number == null) {
+            return null;
+        }
+        if (currentOperation == null) {
+            clear();
+            return args[0];
+        }
+        switch (currentOperation) {
+            case ADD:
+            case SUB:
+                args[1] = args[0].divide(BigDecimal.valueOf(100),
+                        SCALE_FOR_DIV_OPERATOR, RoundingMode.HALF_UP)
+                        .multiply(number);
+                break;
+            case MUL:
+            case DIV:
+                args[1] = number.divide(BigDecimal.valueOf(100),
+                        SCALE_FOR_DIV_OPERATOR, RoundingMode.HALF_UP);
+                break;
+        }
+        return args[1];
     }
 
     public BigDecimal setOperator(Operations op, BigDecimal number) {
@@ -81,7 +110,7 @@ public class Calculator implements Parcelable {
                 if (args[1].equals(BigDecimal.ZERO)) {
                     args[0] = null;
                 } else {
-                    args[0] = args[0].divide(args[1], 20, RoundingMode.HALF_UP);
+                    args[0] = args[0].divide(args[1], SCALE_FOR_DIV_OPERATOR, RoundingMode.HALF_UP);
                 }
                 break;
         }

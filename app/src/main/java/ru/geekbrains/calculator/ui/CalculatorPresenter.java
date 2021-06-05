@@ -9,10 +9,20 @@ import ru.geekbrains.calculator.domain.Calculator;
 
 public class CalculatorPresenter implements Parcelable {
 
-    private static final int NO_PRESSED_DOT = -1;
+    public static final Creator<CalculatorPresenter> CREATOR = new Creator<CalculatorPresenter>() {
+        @Override
+        public CalculatorPresenter createFromParcel(Parcel in) {
+            return new CalculatorPresenter(in);
+        }
 
-    private CalculatorView view;
+        @Override
+        public CalculatorPresenter[] newArray(int size) {
+            return new CalculatorPresenter[size];
+        }
+    };
+    private static final int NO_PRESSED_DOT = -1;
     private final Calculator calculator;
+    private CalculatorView view;
     private BigDecimal number;
     private int positionOfPoint = NO_PRESSED_DOT;
     private boolean inputNewNumber;
@@ -36,24 +46,14 @@ public class CalculatorPresenter implements Parcelable {
         setViewNumber();
     }
 
-    public static final Creator<CalculatorPresenter> CREATOR = new Creator<CalculatorPresenter>() {
-        @Override
-        public CalculatorPresenter createFromParcel(Parcel in) {
-            return new CalculatorPresenter(in);
-        }
-
-        @Override
-        public CalculatorPresenter[] newArray(int size) {
-            return new CalculatorPresenter[size];
-        }
-    };
-
     public void keyDelPressed() {
         if (number == null) {
             return;
         }
-        number = number.movePointLeft(1)
-                .setScale(0, BigDecimal.ROUND_FLOOR);
+        if (positionOfPoint != 0) {
+            number = number.movePointLeft(1)
+                    .setScale(0, BigDecimal.ROUND_FLOOR);
+        }
         if (positionOfPoint != NO_PRESSED_DOT) {
             positionOfPoint--;
         }
@@ -133,6 +133,15 @@ public class CalculatorPresenter implements Parcelable {
         setOperator(Calculator.Operations.DIV);
     }
 
+    public void keyPercentPressed() {
+        if (number == null) {
+            return;
+        }
+        number = calculator.setPercent(number);
+        setInputNewNumber();
+        setViewNumber();
+    }
+
     public void keyResultPressed() {
         if (number == null) {
             return;
@@ -155,9 +164,7 @@ public class CalculatorPresenter implements Parcelable {
 
     private void setInputNewNumber() {
         inputNewNumber = true;
-        if (positionOfPoint == 0) {
-            positionOfPoint = NO_PRESSED_DOT;
-        }
+        positionOfPoint = NO_PRESSED_DOT;
     }
 
     private void addDigit(int digit) {
@@ -186,7 +193,7 @@ public class CalculatorPresenter implements Parcelable {
             if (number == null) {
                 view.setViewNumber("error division by zero");
             } else {
-                view.setViewNumber(String.valueOf(getNumberWithPoint())
+                view.setViewNumber(getNumberWithPoint()
                         + ((positionOfPoint == 0) ? "." : ""));
             }
         }

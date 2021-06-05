@@ -67,7 +67,7 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorP
         findViewById(R.id.key_plus).setOnClickListener(v -> calculatorPresenter.keyPlusPressed());
         findViewById(R.id.key_minus).setOnClickListener(v -> calculatorPresenter.keyMinusPressed());
         findViewById(R.id.key_result).setOnClickListener(v -> calculatorPresenter.keyResultPressed());
-//        findViewById(R.id.key_percent).setOnClickListener(v -> calculator.percent());
+        findViewById(R.id.key_percent).setOnClickListener(v -> calculatorPresenter.keyPercentPressed());
     }
 
     @Override
