@@ -12,7 +12,7 @@ import ru.geekbrains.calculator.R;
 
 public class CalculatorActivity extends AppCompatActivity implements CalculatorPresenter.CalculatorView {
 
-    private final String KEY_CALC = "calculator";
+    private static final String KEY_CALC = "calculator";
     private TextView scoreboard;
     private CalculatorPresenter calculatorPresenter;
 
@@ -22,7 +22,12 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorP
         setContentView(R.layout.activity_main);
 
         scoreboard = findViewById(R.id.scoreboard);
-        calculatorPresenter = new CalculatorPresenter(this);
+        if (savedInstanceState == null) {
+            calculatorPresenter = new CalculatorPresenter(this);
+        } else {
+            calculatorPresenter = savedInstanceState.getParcelable(KEY_CALC);
+            calculatorPresenter.setView(this);
+        }
 
         initOnClickListener();
 
@@ -39,6 +44,7 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorP
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_CALC, calculatorPresenter);
     }
 
     private void initOnClickListener() {

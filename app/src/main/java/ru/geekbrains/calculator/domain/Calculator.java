@@ -1,10 +1,12 @@
 package ru.geekbrains.calculator.domain;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Calculator implements Serializable {
+public class Calculator implements Parcelable {
 
     private final BigDecimal[] args;
     private int pointer;
@@ -13,6 +15,24 @@ public class Calculator implements Serializable {
     public Calculator() {
         this.args = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO};
     }
+
+    protected Calculator(Parcel in) {
+        pointer = in.readInt();
+        args = (BigDecimal[]) in.readArray(getClass().getClassLoader());
+        currentOperation = (Operations) in.readSerializable();
+    }
+
+    public static final Creator<Calculator> CREATOR = new Creator<Calculator>() {
+        @Override
+        public Calculator createFromParcel(Parcel in) {
+            return new Calculator(in);
+        }
+
+        @Override
+        public Calculator[] newArray(int size) {
+            return new Calculator[size];
+        }
+    };
 
     public BigDecimal clear() {
         args[0] = BigDecimal.ZERO;
@@ -65,6 +85,18 @@ public class Calculator implements Serializable {
                 }
                 break;
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(pointer);
+        dest.writeArray(args);
+        dest.writeSerializable(currentOperation);
     }
 
     public enum Operations {

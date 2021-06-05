@@ -1,14 +1,17 @@
 package ru.geekbrains.calculator.ui;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 
 import ru.geekbrains.calculator.domain.Calculator;
 
-public class CalculatorPresenter {
+public class CalculatorPresenter implements Parcelable {
 
-    private final int NO_PRESSED_DOT = -1;
+    private static final int NO_PRESSED_DOT = -1;
 
-    private final CalculatorView view;
+    private CalculatorView view;
     private final Calculator calculator;
     private BigDecimal number;
     private int positionOfPoint = NO_PRESSED_DOT;
@@ -21,16 +24,38 @@ public class CalculatorPresenter {
         setViewNumber();
     }
 
+    protected CalculatorPresenter(Parcel in) {
+        calculator = in.readParcelable(Calculator.class.getClassLoader());
+        positionOfPoint = in.readInt();
+        inputNewNumber = in.readByte() != 0;
+        number = (BigDecimal) in.readSerializable();
+    }
+
+    public void setView(CalculatorView view) {
+        this.view = view;
+        setViewNumber();
+    }
+
+    public static final Creator<CalculatorPresenter> CREATOR = new Creator<CalculatorPresenter>() {
+        @Override
+        public CalculatorPresenter createFromParcel(Parcel in) {
+            return new CalculatorPresenter(in);
+        }
+
+        @Override
+        public CalculatorPresenter[] newArray(int size) {
+            return new CalculatorPresenter[size];
+        }
+    };
+
     public void keyDelPressed() {
         if (number == null) {
             return;
         }
         number = number.movePointLeft(1)
                 .setScale(0, BigDecimal.ROUND_FLOOR);
-        if (positionOfPoint > 1) {
+        if (positionOfPoint != NO_PRESSED_DOT) {
             positionOfPoint--;
-        } else {
-            positionOfPoint = NO_PRESSED_DOT;
         }
         setViewNumber();
     }
@@ -42,6 +67,9 @@ public class CalculatorPresenter {
     }
 
     public void keyDotPressed() {
+        if (number == null) {
+            return;
+        }
         checkInputNewNumber();
         if (positionOfPoint == NO_PRESSED_DOT) {
             positionOfPoint = 0;
@@ -110,6 +138,7 @@ public class CalculatorPresenter {
             return;
         }
         number = calculator.result(getNumberWithPoint());
+        setInputNewNumber();
         setViewNumber();
     }
 
@@ -120,8 +149,15 @@ public class CalculatorPresenter {
         number = calculator.setOperator(op,
                 (inputNewNumber) ? null : getNumberWithPoint()
         );
-        inputNewNumber = true;
+        setInputNewNumber();
         setViewNumber();
+    }
+
+    private void setInputNewNumber() {
+        inputNewNumber = true;
+        if (positionOfPoint == 0) {
+            positionOfPoint = NO_PRESSED_DOT;
+        }
     }
 
     private void addDigit(int digit) {
@@ -150,13 +186,27 @@ public class CalculatorPresenter {
             if (number == null) {
                 view.setViewNumber("error division by zero");
             } else {
-                view.setViewNumber(String.valueOf(getNumberWithPoint()));
+                view.setViewNumber(String.valueOf(getNumberWithPoint())
+                        + ((positionOfPoint == 0) ? "." : ""));
             }
         }
     }
 
     private BigDecimal getNumberWithPoint() {
         return (positionOfPoint > 0) ? number.movePointLeft(positionOfPoint) : number;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(calculator, flags);
+        dest.writeInt(positionOfPoint);
+        dest.writeByte((byte) (inputNewNumber ? 1 : 0));
+        dest.writeSerializable(number);
     }
 
     public interface CalculatorView {
