@@ -4,4 +4,6 @@
     <color name="background_color">#555555</color>
     <color name="button">#8E8E8E</color>
     <color name="button_strong">#FFBB86FC</color>
+    <color name="color_primary_custom">#AAAB56FC</color>
+    <color name="color_primary_variant_custom">#FF995599</color>
 </resources>

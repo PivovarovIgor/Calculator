@@ -12,4 +12,6 @@
     <color name="shadow_color">#AAAAAA</color>
     <color name="button">#575757</color>
     <color name="button_strong">#FF6200EE</color>
+    <color name="color_primary_custom">#FFFF00FF</color>
+    <color name="color_primary_variant_custom">#FFDD00AA</color>
 </resources>
