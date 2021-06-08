@@ -9,6 +9,8 @@ import java.math.RoundingMode;
 public class Calculator implements Parcelable {
 
     private static final int SCALE_FOR_DIV_OPERATOR = 10;
+    private static final int POINTER_TO_FIRST_ARGUMENT = 0;
+    private static final int POINTER_TO_SECOND_ARGUMENT = 1;
 
     private final BigDecimal[] args;
     private int pointer;
@@ -37,11 +39,11 @@ public class Calculator implements Parcelable {
     };
 
     public BigDecimal clear() {
-        args[0] = BigDecimal.ZERO;
-        args[1] = BigDecimal.ZERO;
-        pointer = 0;
+        args[POINTER_TO_FIRST_ARGUMENT] = BigDecimal.ZERO;
+        args[POINTER_TO_SECOND_ARGUMENT] = BigDecimal.ZERO;
+        pointer = POINTER_TO_FIRST_ARGUMENT;
         currentOperation = null;
-        return args[0];
+        return args[pointer];
     }
 
     public BigDecimal result(BigDecimal number) {
@@ -50,8 +52,8 @@ public class Calculator implements Parcelable {
         }
         args[pointer] = number;
         calculate();
-        pointer = 0;
-        return args[0];
+        pointer = POINTER_TO_FIRST_ARGUMENT;
+        return args[pointer];
     }
 
     public BigDecimal setPercent(BigDecimal number) {
@@ -60,22 +62,23 @@ public class Calculator implements Parcelable {
         }
         if (currentOperation == null) {
             clear();
-            return args[0];
+            return args[POINTER_TO_FIRST_ARGUMENT];
         }
         switch (currentOperation) {
             case ADD:
             case SUB:
-                args[1] = args[0].divide(BigDecimal.valueOf(100),
+                args[POINTER_TO_SECOND_ARGUMENT] = args[POINTER_TO_FIRST_ARGUMENT]
+                        .divide(BigDecimal.valueOf(100),
                         SCALE_FOR_DIV_OPERATOR, RoundingMode.HALF_UP)
                         .multiply(number);
                 break;
             case MUL:
             case DIV:
-                args[1] = number.divide(BigDecimal.valueOf(100),
+                args[POINTER_TO_SECOND_ARGUMENT] = number.divide(BigDecimal.valueOf(100),
                         SCALE_FOR_DIV_OPERATOR, RoundingMode.HALF_UP);
                 break;
         }
-        return args[1];
+        return args[POINTER_TO_SECOND_ARGUMENT];
     }
 
     public BigDecimal setOperator(Operations op, BigDecimal number) {
@@ -83,13 +86,13 @@ public class Calculator implements Parcelable {
         if (number != null) {
             args[pointer] = number;
         }
-        if (pointer == 0) {
-            pointer = 1;
+        if (pointer == POINTER_TO_FIRST_ARGUMENT) {
+            pointer = POINTER_TO_SECOND_ARGUMENT;
         } else if (number != null) {
             calculate();
         }
         currentOperation = op;
-        return args[0];
+        return args[POINTER_TO_FIRST_ARGUMENT];
     }
 
     private void calculate() {
@@ -98,19 +101,25 @@ public class Calculator implements Parcelable {
         }
         switch (currentOperation) {
             case ADD:
-                args[0] = args[0].add(args[1]);
+                args[POINTER_TO_FIRST_ARGUMENT] = args[POINTER_TO_FIRST_ARGUMENT]
+                        .add(args[POINTER_TO_SECOND_ARGUMENT]);
                 break;
             case SUB:
-                args[0] = args[0].subtract(args[1]);
+                args[POINTER_TO_FIRST_ARGUMENT] = args[POINTER_TO_FIRST_ARGUMENT]
+                        .subtract(args[POINTER_TO_SECOND_ARGUMENT]);
                 break;
             case MUL:
-                args[0] = args[0].multiply(args[1]);
+                args[POINTER_TO_FIRST_ARGUMENT] = args[POINTER_TO_FIRST_ARGUMENT]
+                        .multiply(args[POINTER_TO_SECOND_ARGUMENT]);
                 break;
             case DIV:
-                if (args[1].equals(BigDecimal.ZERO)) {
-                    args[0] = null;
+                if (args[POINTER_TO_SECOND_ARGUMENT].equals(BigDecimal.ZERO)) {
+                    args[POINTER_TO_FIRST_ARGUMENT] = null;
                 } else {
-                    args[0] = args[0].divide(args[1], SCALE_FOR_DIV_OPERATOR, RoundingMode.HALF_UP);
+                    args[POINTER_TO_FIRST_ARGUMENT] = args[POINTER_TO_FIRST_ARGUMENT]
+                            .divide(args[POINTER_TO_SECOND_ARGUMENT],
+                                    SCALE_FOR_DIV_OPERATOR,
+                                    RoundingMode.HALF_UP);
                 }
                 break;
         }
