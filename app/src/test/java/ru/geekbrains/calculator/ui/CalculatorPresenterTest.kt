@@ -50,6 +50,13 @@ class CalculatorPresenterTest {
     }
 
     @Test
+    fun restore_state_presenter_with_dot() {
+        val ENTERED_VALUE = "12.9"
+        presenter.setNumber(ENTERED_VALUE)
+        verify(view, times(1)).setViewNumber(ENTERED_VALUE)
+    }
+
+    @Test
     fun restore_incorrect_state_presenter() {
         Assert.assertThrows(NumberFormatException::class.java) { presenter.setNumber("Free text instead of a number") }
     }
