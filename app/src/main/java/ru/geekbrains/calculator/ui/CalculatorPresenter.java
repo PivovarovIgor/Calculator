@@ -2,7 +2,6 @@ package ru.geekbrains.calculator.ui;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.math.BigDecimal;
 
@@ -218,12 +217,8 @@ public class CalculatorPresenter implements Parcelable {
     }
 
     public void setNumber(String strNumber) {
-        try {
-            number = new BigDecimal(strNumber);
-            setViewNumber();
-        } catch (NumberFormatException ex) {
-            Log.e(this.getClass().getName(), "It is not number " + strNumber, ex);
-        }
+        number = new BigDecimal(strNumber);
+        setViewNumber();
     }
 
     public interface CalculatorView {
