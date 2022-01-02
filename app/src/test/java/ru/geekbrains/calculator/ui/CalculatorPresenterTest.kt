@@ -80,4 +80,71 @@ class CalculatorPresenterTest {
             BigDecimal(ENTERED_VALUE)
         )
     }
+
+    @Test
+    fun calculate_div_on_zero() {
+        presenter.keyEightPressed()
+        `when`(calculator.setOperator(any(), any())).thenReturn(BigDecimal("8"))
+        presenter.keyDivPressed()
+        presenter.keyZeroPressed()
+        `when`(calculator.result(any())).thenReturn(null)
+        presenter.keyResultPressed()
+        verify(view, atLeastOnce()).setViewNumber("error division by zero")
+    }
+
+    @Test
+    fun entering_number_with_dot() {
+        presenter.keyDotPressed()
+        presenter.keyZeroPressed()
+        presenter.keySevenPressed()
+        verify(view, atLeastOnce()).setViewNumber("0.07")
+    }
+
+    @Test
+    fun try_enter_number_with_double_dot() {
+        presenter.keyThreePressed()
+        presenter.keyDotPressed()
+        presenter.keyZeroPressed()
+        presenter.keySevenPressed()
+        presenter.keyDotPressed()
+        presenter.keyEightPressed()
+        verify(view, atLeastOnce()).setViewNumber("3.078")
+    }
+
+    @Test
+    fun enter_dot_and_delete_dot() {
+        presenter.keyDotPressed()
+        presenter.keyDelPressed()
+        presenter.keyFourPressed()
+        verify(view, atLeastOnce()).setViewNumber("4")
+    }
+
+    @Test
+    fun enter_dot_after_first_number_and_delete_dot() {
+        presenter.keyFivePressed()
+        presenter.keyDotPressed()
+        presenter.keyDelPressed()
+        presenter.keyNinePressed()
+        verify(view, atLeastOnce()).setViewNumber("59")
+    }
+
+    @Test
+    fun enter_dot_in_the_end() {
+        presenter.keyZeroPressed()
+        presenter.keyNinePressed()
+        presenter.keyDotPressed()
+        verify(view, atLeastOnce()).setViewNumber("9.")
+    }
+
+    @Test
+    fun enter_zero_before_dot_and_after() {
+        presenter.keyZeroPressed()
+        presenter.keyZeroPressed()
+        presenter.keyZeroPressed()
+        presenter.keyDotPressed()
+        presenter.keyZeroPressed()
+        presenter.keyZeroPressed()
+        presenter.keyZeroPressed()
+        verify(view, atLeastOnce()).setViewNumber("0.000")
+    }
 }
