@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ru.geekbrains.calculator.R;
+import ru.geekbrains.calculator.domain.Calculator;
 
 public class CalculatorActivity extends AppCompatActivity implements CalculatorPresenter.CalculatorView {
 
@@ -26,7 +27,7 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorP
 
         scoreboard = findViewById(R.id.scoreboard);
         if (savedInstanceState == null) {
-            calculatorPresenter = new CalculatorPresenter(this);
+            calculatorPresenter = new CalculatorPresenter(this, new Calculator());
         } else {
             calculatorPresenter = savedInstanceState.getParcelable(KEY_CALC);
             calculatorPresenter.setView(this);

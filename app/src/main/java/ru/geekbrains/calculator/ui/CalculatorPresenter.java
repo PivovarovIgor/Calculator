@@ -28,8 +28,8 @@ public class CalculatorPresenter implements Parcelable {
     private int positionOfPoint = NO_PRESSED_DOT;
     private boolean inputNewNumber;
 
-    public CalculatorPresenter(CalculatorView view) {
-        this.calculator = new Calculator();
+    public CalculatorPresenter(CalculatorView view, Calculator calculator) {
+        this.calculator = calculator;
         this.view = view;
         this.number = BigDecimal.ZERO;
         setViewNumber();
