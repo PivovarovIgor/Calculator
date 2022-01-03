@@ -1,6 +1,7 @@
 package ru.geekbrains.calculator.ui
 
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.inOrder
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import org.junit.Assert
@@ -8,7 +9,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.atLeastOnce
 import org.mockito.MockitoAnnotations.initMocks
 import ru.geekbrains.calculator.domain.Calculator
 import java.math.BigDecimal
@@ -62,9 +62,9 @@ class CalculatorPresenterTest {
     }
 
     @Test
-    fun calculate_multiple() {
+    fun in_order_entering_all_numbers_multiply_in_the_end() {
 
-        val ENTERED_VALUE = "1234567890"
+        val inOrder = inOrder(view, calculator)
 
         presenter.keyOnePressed()
         presenter.keyTwoPressed()
@@ -77,74 +77,134 @@ class CalculatorPresenterTest {
         presenter.keyNinePressed()
         presenter.keyZeroPressed()
 
-        `when`(calculator.setOperator(any(), any())).thenReturn(BigDecimal(ENTERED_VALUE))
+        `when`(calculator.setOperator(any(), any())).thenReturn(BigDecimal.valueOf(1234567890))
 
         presenter.keyMulPressed()
 
-        verify(view, atLeastOnce()).setViewNumber(ENTERED_VALUE)
-        verify(calculator, times(1)).setOperator(
-            Calculator.Operations.MUL,
-            BigDecimal(ENTERED_VALUE)
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("1")
+        inOrder.verify(view, times(1)).setViewNumber("12")
+        inOrder.verify(view, times(1)).setViewNumber("123")
+        inOrder.verify(view, times(1)).setViewNumber("1234")
+        inOrder.verify(view, times(1)).setViewNumber("12345")
+        inOrder.verify(view, times(1)).setViewNumber("123456")
+        inOrder.verify(view, times(1)).setViewNumber("1234567")
+        inOrder.verify(view, times(1)).setViewNumber("12345678")
+        inOrder.verify(view, times(1)).setViewNumber("123456789")
+        inOrder.verify(view, times(1)).setViewNumber("1234567890")
+        inOrder.verify(calculator, times(1)).setOperator(
+            Calculator.Operations.MUL, BigDecimal.valueOf(1234567890)
         )
+        inOrder.verify(view, times(1)).setViewNumber("1234567890")
     }
 
     @Test
-    fun calculate_div_on_zero() {
+    fun in_order_calculate_div_on_zero() {
+
+        val inOrder = inOrder(view, calculator)
+
         presenter.keyEightPressed()
         `when`(calculator.setOperator(any(), any())).thenReturn(BigDecimal("8"))
         presenter.keyDivPressed()
         presenter.keyZeroPressed()
         `when`(calculator.result(any())).thenReturn(null)
         presenter.keyResultPressed()
-        verify(view, atLeastOnce()).setViewNumber("error division by zero")
+
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("8")
+        inOrder.verify(calculator, times(1))
+            .setOperator(Calculator.Operations.DIV, BigDecimal.valueOf(8))
+        inOrder.verify(view, times(1)).setViewNumber("8")
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(calculator, times(1)).result(BigDecimal.valueOf(0))
+        inOrder.verify(view, times(1)).setViewNumber("error division by zero")
     }
 
     @Test
-    fun entering_number_with_dot() {
+    fun in_order_entering_number_with_dot() {
+
+        val inOrder = inOrder(view)
+
         presenter.keyDotPressed()
         presenter.keyZeroPressed()
         presenter.keySevenPressed()
-        verify(view, atLeastOnce()).setViewNumber("0.07")
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("0.")
+        inOrder.verify(view, times(1)).setViewNumber("0.0")
+        inOrder.verify(view, times(1)).setViewNumber("0.07")
     }
 
     @Test
-    fun try_enter_number_with_double_dot() {
+    fun in_order_try_enter_number_with_double_dot() {
+
+        val inOrder = inOrder(view)
+
         presenter.keyThreePressed()
         presenter.keyDotPressed()
         presenter.keyZeroPressed()
         presenter.keySevenPressed()
         presenter.keyDotPressed()
         presenter.keyEightPressed()
-        verify(view, atLeastOnce()).setViewNumber("3.078")
+
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("3")
+        inOrder.verify(view, times(1)).setViewNumber("3.")
+        inOrder.verify(view, times(1)).setViewNumber("3.0")
+        inOrder.verify(view, times(1)).setViewNumber("3.07")
+        inOrder.verify(view, times(1)).setViewNumber("3.078")
     }
 
     @Test
-    fun enter_dot_and_delete_dot() {
+    fun in_order_enter_dot_and_delete_dot() {
+
+        val inOrder = inOrder(view)
+
         presenter.keyDotPressed()
         presenter.keyDelPressed()
         presenter.keyFourPressed()
-        verify(view, atLeastOnce()).setViewNumber("4")
+
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("0.")
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("4")
     }
 
     @Test
-    fun enter_dot_after_first_number_and_delete_dot() {
+    fun in_order_enter_dot_after_first_number_and_delete_dot() {
+
+        val inOrder = inOrder(view)
+
         presenter.keyFivePressed()
         presenter.keyDotPressed()
         presenter.keyDelPressed()
         presenter.keyNinePressed()
-        verify(view, atLeastOnce()).setViewNumber("59")
+
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("5")
+        inOrder.verify(view, times(1)).setViewNumber("5.")
+        inOrder.verify(view, times(1)).setViewNumber("5")
+        inOrder.verify(view, times(1)).setViewNumber("59")
     }
 
     @Test
-    fun enter_dot_in_the_end() {
+    fun in_order_enter_dot_in_the_end() {
+
+        val inOrder = inOrder(view)
+
         presenter.keyZeroPressed()
         presenter.keyNinePressed()
         presenter.keyDotPressed()
-        verify(view, atLeastOnce()).setViewNumber("9.")
+
+        inOrder.verify(view, times(2)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("9")
+        inOrder.verify(view, times(1)).setViewNumber("9.")
     }
 
     @Test
-    fun enter_zero_before_dot_and_after() {
+    fun in_order_enter_zero_before_dot_and_after() {
+
+        val inOrder = inOrder(view)
+
         presenter.keyZeroPressed()
         presenter.keyZeroPressed()
         presenter.keyZeroPressed()
@@ -152,6 +212,11 @@ class CalculatorPresenterTest {
         presenter.keyZeroPressed()
         presenter.keyZeroPressed()
         presenter.keyZeroPressed()
-        verify(view, atLeastOnce()).setViewNumber("0.000")
+
+        inOrder.verify(view, times(4)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("0.")
+        inOrder.verify(view, times(1)).setViewNumber("0.0")
+        inOrder.verify(view, times(1)).setViewNumber("0.00")
+        inOrder.verify(view, times(1)).setViewNumber("0.000")
     }
 }
