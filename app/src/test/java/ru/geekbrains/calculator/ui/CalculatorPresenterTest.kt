@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations.initMocks
+import org.mockito.MockitoAnnotations.openMocks
 import ru.geekbrains.calculator.domain.Calculator
 import java.math.BigDecimal
 
@@ -25,7 +25,7 @@ class CalculatorPresenterTest {
 
     @Before
     fun setUp() {
-        initMocks(this)
+        openMocks(this).close()
         presenter = CalculatorPresenter(view, calculator)
     }
 
@@ -101,6 +101,8 @@ class CalculatorPresenterTest {
     @Test
     fun in_order_calculate_div_on_zero() {
 
+        val ERROR_DIVISION_BY_ZERO_MESSAGE = "error division by zero"
+
         val inOrder = inOrder(view, calculator)
 
         presenter.keyEightPressed()
@@ -109,6 +111,19 @@ class CalculatorPresenterTest {
         presenter.keyZeroPressed()
         `when`(calculator.result(any())).thenReturn(null)
         presenter.keyResultPressed()
+        //begin "error division by zero"
+        presenter.keyResultPressed()
+        presenter.keyMinusPressed()
+        presenter.keyMulPressed()
+        presenter.keyPlusPressed()
+        presenter.keyMinusPressed()
+        presenter.keyPercentPressed()
+        presenter.keyOnePressed()
+        presenter.keyDotPressed()
+        presenter.keyDelPressed()
+        //end "error division by zero"
+        `when`(calculator.clear()).thenReturn(BigDecimal.valueOf(0))
+        presenter.keyClearPressed()
 
         inOrder.verify(view, times(1)).setViewNumber("0")
         inOrder.verify(view, times(1)).setViewNumber("8")
@@ -117,7 +132,8 @@ class CalculatorPresenterTest {
         inOrder.verify(view, times(1)).setViewNumber("8")
         inOrder.verify(view, times(1)).setViewNumber("0")
         inOrder.verify(calculator, times(1)).result(BigDecimal.valueOf(0))
-        inOrder.verify(view, times(1)).setViewNumber("error division by zero")
+        inOrder.verify(view, times(1)).setViewNumber(ERROR_DIVISION_BY_ZERO_MESSAGE)
+        inOrder.verify(view, times(1)).setViewNumber("0")
     }
 
     @Test
@@ -177,13 +193,15 @@ class CalculatorPresenterTest {
         presenter.keyFivePressed()
         presenter.keyDotPressed()
         presenter.keyDelPressed()
+        presenter.keyDelPressed()
         presenter.keyNinePressed()
 
         inOrder.verify(view, times(1)).setViewNumber("0")
         inOrder.verify(view, times(1)).setViewNumber("5")
         inOrder.verify(view, times(1)).setViewNumber("5.")
         inOrder.verify(view, times(1)).setViewNumber("5")
-        inOrder.verify(view, times(1)).setViewNumber("59")
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view, times(1)).setViewNumber("9")
     }
 
     @Test
@@ -218,5 +236,52 @@ class CalculatorPresenterTest {
         inOrder.verify(view, times(1)).setViewNumber("0.0")
         inOrder.verify(view, times(1)).setViewNumber("0.00")
         inOrder.verify(view, times(1)).setViewNumber("0.000")
+    }
+
+    @Test
+    fun in_order_complex_calculate() {
+
+        val inOrder = inOrder(view, calculator)
+
+        `when`(calculator.setOperator(any(), any()))
+            .thenReturn(BigDecimal.valueOf(1))
+            .thenReturn(BigDecimal.valueOf(3))
+        `when`(calculator.result(any()))
+            .thenReturn(BigDecimal.valueOf(2))
+            .thenReturn(BigDecimal.valueOf(1))
+            .thenReturn(BigDecimal.valueOf(0))
+            .thenReturn(BigDecimal.valueOf(-1))
+
+        presenter.keyOnePressed()
+        presenter.keyPlusPressed()
+        presenter.keyTwoPressed()
+        presenter.keyMinusPressed()
+        presenter.keyOnePressed()
+        presenter.keyResultPressed()
+        presenter.keyResultPressed()
+        presenter.keyResultPressed()
+        presenter.keyResultPressed()
+
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(view).setViewNumber("1")
+        inOrder.verify(calculator).setOperator(Calculator.Operations.ADD, BigDecimal.valueOf(1))
+        inOrder.verify(view, times(1)).setViewNumber("1")
+        inOrder.verify(view, times(1)).setViewNumber("2")
+        inOrder.verify(calculator, times(1))
+            .setOperator(Calculator.Operations.SUB, BigDecimal.valueOf(2))
+        inOrder.verify(view, times(1)).setViewNumber("3")
+        inOrder.verify(view, times(1)).setViewNumber("1")
+        inOrder.verify(calculator, times(1))
+            .result(BigDecimal.valueOf(1))
+        inOrder.verify(view, times(1)).setViewNumber("2")
+        inOrder.verify(calculator, times(1))
+            .result(BigDecimal.valueOf(2))
+        inOrder.verify(view, times(1)).setViewNumber("1")
+        inOrder.verify(calculator, times(1))
+            .result(BigDecimal.valueOf(1))
+        inOrder.verify(view, times(1)).setViewNumber("0")
+        inOrder.verify(calculator, times(1))
+            .result(BigDecimal.valueOf(0))
+        inOrder.verify(view, times(1)).setViewNumber("-1")
     }
 }
