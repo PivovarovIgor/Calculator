@@ -25,13 +25,9 @@ class CalculatorActivityTest {
 
     private lateinit var scenario: ActivityScenario<CalculatorActivity>
 
-    private lateinit var activityRule: ActivityScenarioRule<CalculatorActivity>
-
-
     @Before
     fun setUp() {
         scenario = ActivityScenario.launch(CalculatorActivity::class.java)
-        activityRule = ActivityScenarioRule(CalculatorActivity::class.java)
     }
 
     @Test
