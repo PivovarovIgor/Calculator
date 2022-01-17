@@ -1,7 +1,6 @@
 package ru.geekbrains.calculator.ui
 
 import android.content.pm.ActivityInfo
-import android.provider.Settings.Global.getString
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
@@ -12,7 +11,6 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.android.material.internal.ContextUtils
 import org.hamcrest.Matcher
 import org.junit.After
@@ -49,6 +47,8 @@ class CalculatorActivityTest {
         onView(withId(R.id.key_0)).perform(click())
         onView(withId(R.id.scoreboard)).check(matches(withText("1234567890")))
         onView(isRoot()).perform(OrientationChangeAction.ORIENTATION_LANDSCAPE)
+        onView(withId(R.id.scoreboard)).check(matches(withText("1234567890")))
+        onView(isRoot()).perform(OrientationChangeAction.ORIENTATION_PORTRAIT)
         onView(withId(R.id.scoreboard)).check(matches(withText("1234567890")))
     }
 
@@ -92,7 +92,7 @@ class OrientationChangeAction(private val orientation: Int): ViewAction {
 
     override fun perform(uiController: UiController, view: View) {
         uiController.loopMainThreadUntilIdle()
-        var activity = ContextUtils.getActivity(view.context) ?: let {
+        val activity = ContextUtils.getActivity(view.context) ?: let {
             if (view is ViewGroup) {
                 for (i in 0..view.childCount) {
                     val activity = ContextUtils.getActivity(view.getChildAt(i).context)
